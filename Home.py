@@ -49,4 +49,4 @@ if selected == "Home":
 # About Page
 elif selected == "About":
     st.subheader("About Chut-Paglu")
-    st.write("This application was built by Abhishek and their teammate to support farmers with machine learning–driven tools and solutions.")
+    st.write("This applicatiion was built by Abhishek and their teammate to support farmers with machine learning–driven tools and solutions.")
