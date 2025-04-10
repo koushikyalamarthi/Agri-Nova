@@ -1,6 +1,6 @@
 # 🌾 AgriNova – Smart Farming Assistant
 
-**AgriNova** is a smart farming web application that empowers farmers and agri-enthusiasts with machine learning and deep learning solutions to improve crop productivity, sustainability, and decision-making.
+**AgriNova** is a smart farming web application designed to assist farmers and agri-enthusiasts by integrating Deep Learning and data-driven solutions. It provides intelligent support for identifying plant diseases, choosing the right crops and fertilizers, and offering real-time action advice based on weather conditions.
 
 🔗 **Live Demo:** [AgriNova Web App](https://agrinova.streamlit.app/)
 
@@ -9,55 +9,57 @@
 ## 🚀 Features
 
 - **🌱 Plant Disease Detection**  
-  Upload a plant leaf image and get instant disease prediction using a Deep Learning model (CNN – ResNet9 architecture).  
-  Helps in early diagnosis and prevention.
+  Upload an image of a crop leaf to detect diseases using a deep learning model trained with TensorFlow and Keras.
 
 - **🌾 Crop Recommendation**  
-  Based on user inputs like soil type (N, P, K levels), pH, rainfall, temperature, and humidity — a **Random Forest** model predicts the best crop to grow in the given conditions.
+  Suggests the best crop to grow based on soil nutrients, temperature, humidity, pH level, and rainfall using a classification model.
 
 - **💊 Fertilizer Suggestion**  
-  Uses logic-driven rules to recommend fertilizers based on nutrient deficiencies and crop type.
+  Based on the nutrient requirements of crops and current soil condition, the app recommends suitable fertilizers.
 
 - **📈 Action Advisory**  
-  Provides region-specific agricultural advice by analyzing crop patterns, trends, and simulated weather conditions using a trained machine learning model.
+  Provides useful farming suggestions by analyzing **real-time weather data** from OpenWeatherMap API, based on selected city and state.
 
 ---
 
-## 🧠 Model Architecture & Working
+## 🧠 Model Overview
 
 ### 🔍 1. **Plant Disease Detection**
-- Model: Convolutional Neural Network (ResNet9)
-- Framework: PyTorch → Converted to TensorFlow Lite for efficient inference
-- Input: Image of crop leaf
-- Output: Predicted disease category (e.g., Healthy, Bacterial Blight, Early Blight, etc.)
+- **Model**: Convolutional Neural Network (CNN)
+- **Framework**: TensorFlow & Keras
+- **Input**: Image of a leaf
+- **Output**: Predicted disease (or healthy)
 
 ### 🌾 2. **Crop Recommendation**
-- Model: Random Forest Classifier
-- Input Features:
+- **Model**: Classification Model (Random Forest or similar)
+- **Input Features**:
   - Nitrogen (N), Phosphorus (P), Potassium (K)
   - Temperature, Humidity
-  - pH value, Rainfall
-- Output: Recommended crop (e.g., Rice, Wheat, Maize)
+  - pH level, Rainfall
+- **Output**: Recommended crop (e.g., Rice, Wheat, Cotton)
 
 ### 💊 3. **Fertilizer Suggestion**
-- Rule-based logic that:
-  - Compares ideal NPK values for a given crop
-  - Calculates the deficit/excess
-  - Suggests the most suitable fertilizer accordingly
+- **Approach**: Rule-based logic
+- **Logic**:
+  - Compares current NPK values with ideal values for the selected crop
+  - Suggests fertilizers to balance soil nutrients
 
 ### 📈 4. **Action Advisory**
-- Uses a combination of:
-  - ML-trained classification model (e.g., Decision Trees or Random Forest)
-  - Weather + crop condition trends
-- Output: Advisory messages like “Irrigation needed,” “Harvest soon,” etc.
+- **Approach**: No ML used
+- **Data Source**: Real-time weather from OpenWeatherMap API
+- **Working**:
+  - User selects a city and state
+  - App fetches temperature, humidity, wind, rainfall, etc.
+  - Based on predefined rules, it gives useful suggestions (e.g., “Apply irrigation,” “Avoid pesticide spraying,” etc.)
 
 ---
 
 ## 🛠 Tech Stack
 
-- **Frontend**: Streamlit (Python-based web framework)
-- **ML/DL Libraries**: Scikit-learn, TensorFlow, PyTorch, NumPy, Pandas
-- **Deployment**: Streamlit Cloud
+- **Frontend**: Streamlit
+- **Backend Models**: TensorFlow + Keras
+- **APIs**: OpenWeatherMap
+- **Languages**: Python, HTML (within markdown)
 
 ---
 
