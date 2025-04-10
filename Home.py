@@ -1,7 +1,8 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
 
-st.set_page_config(page_title="Abhishek", layout="wide")
+# Page config
+st.set_page_config(page_title="AgriNova", layout="wide")
 
 # Sidebar navigation
 with st.sidebar:
@@ -13,40 +14,71 @@ with st.sidebar:
         default_index=0,
     )
 
-# Main Header
-st.markdown("<h1 style='text-align: center; color: green;'>Abhishek</h1>", unsafe_allow_html=True)
+# Custom centered header with tighter spacing
+st.markdown("""
+    <div style="display: flex; justify-content: center; align-items: center; padding-top: 10px; padding-bottom: 5px;">
+        <h1 style='color: #2E8B57; font-size: 42px; margin: 0;'>🌾 AgriNova 
+        <span style='font-size: 20px; color: gray;'>(Agriculture + Innovation)</span></h1>
+    </div>
+""", unsafe_allow_html=True)
+
 st.markdown("---")
 
-# Home
+# Home Page
 if selected == "Home":
-    st.subheader("Welcome to Chut-Paglu 🌾")
-    st.write("""
-        Chut-Paglu is your one-stop smart farming assistant. 
-        This platform helps farmers and agricultural enthusiasts make better decisions using technology-driven solutions:
+    with st.container():
+        st.markdown("## 👋 Welcome to AgriNova!")
+        st.markdown("> *“Empowering Farmers with Innovation and Intelligence.”*")
 
-        - 🌱 Plant Disease Detection
-        - 🌾 Crop Recommendation System
-        - 💊 Fertilizer Suggestion
-        - 📈 Actionable Advisory based on weather and agricultural trends
-    """)
+        st.markdown("""
+        **AgriNova** is your all-in-one smart farming companion 🌿.  
+        This platform supports farmers and agri-enthusiasts by integrating machine learning–driven solutions to optimize crop health, productivity, and sustainability.
+        """)
 
-    st.markdown("## 🚀 Explore Services")
+    st.markdown("### 🔧 Core Features")
 
     col1, col2 = st.columns(2)
-
     with col1:
+        st.success("🌱 **Plant Disease Detection**\n\nDetect leaf and crop diseases using deep learning.")
+        st.warning("💊 **Fertilizer Suggestion**\n\nChoose the right fertilizers based on soil and crop type.")
+    with col2:
+        st.info("🌾 **Crop Recommendation System**\n\nRecommend best-suited crops based on region and season.")
+        st.error("📈 **Action Advisory**\n\nGet timely advice based on agri-trends and weather data.")
+
+    st.markdown("### 🚀 Quick Navigation")
+    col3, col4 = st.columns(2)
+    with col3:
         st.page_link("pages/disease_detection.py", label="🔍 Disease Detection", icon="🦠")
-
-    with col2:
-        st.page_link("pages/crop_recommendation.py", label="🌿 Crop Recommendation", icon="🌾")
-
-    with col1:
         st.page_link("pages/fertilizer_suggestion.py", label="💊 Fertilizer Suggestion", icon="🧪")
-
-    with col2:
+    with col4:
+        st.page_link("pages/crop_recommendation.py", label="🌿 Crop Recommendation", icon="🌾")
         st.page_link("pages/action_advisory.py", label="📈 Action Advisory", icon="📊")
+
+    st.markdown("----")
 
 # About Page
 elif selected == "About":
-    st.subheader("About Chut-Paglu")
-    st.write("This applicatiion was built by Abhishek and their teammate to support farmers with machine learning–driven tools and solutions.")
+    st.markdown("## 🤝 About Us")
+    st.write("""
+        **AgriNova** is a smart farming web platform developed by a passionate team from **NIT Delhi** 🚀.
+
+        ### 👨‍💻 Team Members:
+        - **Abhishek** – 231212001  
+        - **Gautam** – 231212013  
+        - **Angad** – 231212003  
+        - **Ruchir** – 231212011
+
+        ### 🌟 Our Mission:
+        To empower farmers through a fusion of:
+        - 🌐 Modern technology  
+        - 📊 Data-driven decisions  
+        - 🌿 Sustainable agricultural practices  
+
+        We believe that the future of agriculture lies in **innovation** — and AgriNova is your partner in that journey.
+    """)
+
+    st.info("📬 For collaborations or queries, reach out at: 231212001@nitdelhi.ac.in")
+
+# Footer
+st.markdown("---")
+st.markdown("<p style='text-align: center; font-size: 14px;'>© 2025 AgriNova. Made for Smart Farming.</p>", unsafe_allow_html=True)
