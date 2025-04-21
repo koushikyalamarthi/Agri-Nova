@@ -1,7 +1,4 @@
-streamlit==1.17.1
-requests==2.26.0
-transformers==4.23.1
-torch==1.10.0+cpu    # Make sure this is the correct version of torch you're using (for CPU or GPU)
+
 absl-py==2.2.1
 accelerate==1.4.0
 aiohappyeyeballs==2.4.6
