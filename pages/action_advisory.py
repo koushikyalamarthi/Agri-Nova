@@ -1,83 +1,113 @@
 import streamlit as st
 import requests
-from transformers import pipeline, GPT2LMHeadModel, GPT2Tokenizer
 
-# --- Weather API Key ---
+# --- API Config ---
 weather_api_key = "f354473f1f7e5f9023ed7cc4659fab5f"
 base_url = "http://api.openweathermap.org/data/2.5/weather"
 
-# --- State & City Mapping ---
+# --- State to City Mapping ---
 state_city_map = {
-    "Uttar Pradesh": ["Lucknow", "Kanpur", "Agra"],
-    "Maharashtra": ["Mumbai", "Pune", "Nagpur"],
-    "Delhi": ["New Delhi"]
+    "Andhra Pradesh": ["Visakhapatnam", "Vijayawada", "Guntur", "Nellore"],
+    "Arunachal Pradesh": ["Itanagar", "Naharlagun", "Pasighat"],
+    "Assam": ["Guwahati", "Dibrugarh", "Silchar"],
+    "Bihar": ["Patna", "Gaya", "Muzaffarpur", "Bhagalpur"],
+    "Chhattisgarh": ["Raipur", "Bhilai", "Bilaspur"],
+    "Goa": ["Panaji", "Margao", "Vasco da Gama"],
+    "Gujarat": ["Ahmedabad", "Surat", "Rajkot", "Vadodara"],
+    "Haryana": ["Chandigarh", "Gurugram", "Faridabad", "Panipat"],
+    "Himachal Pradesh": ["Shimla", "Manali", "Dharamshala"],
+    "Jharkhand": ["Ranchi", "Jamshedpur", "Dhanbad"],
+    "Karnataka": ["Bengaluru", "Mysuru", "Mangaluru", "Hubli"],
+    "Kerala": ["Thiruvananthapuram", "Kochi", "Kozhikode", "Thrissur"],
+    "Madhya Pradesh": ["Bhopal", "Indore", "Gwalior", "Jabalpur"],
+    "Maharashtra": ["Mumbai", "Pune", "Nagpur", "Nashik"],
+    "Manipur": ["Imphal", "Thoubal"],
+    "Meghalaya": ["Shillong", "Tura"],
+    "Mizoram": ["Aizawl", "Lunglei"],
+    "Nagaland": ["Kohima", "Dimapur"],
+    "Odisha": ["Bhubaneswar", "Cuttack", "Puri", "Rourkela"],
+    "Punjab": ["Ludhiana", "Amritsar", "Jalandhar", "Patiala"],
+    "Rajasthan": ["Jaipur", "Udaipur", "Jodhpur", "Kota"],
+    "Sikkim": ["Gangtok", "Namchi"],
+    "Tamil Nadu": ["Chennai", "Coimbatore", "Madurai", "Tiruchirappalli"],
+    "Telangana": ["Hyderabad", "Warangal", "Nizamabad"],
+    "Tripura": ["Agartala", "Udaipur"],
+    "Uttar Pradesh": ["Lucknow", "Kanpur", "Agra", "Varanasi"],
+    "Uttarakhand": ["Dehradun", "Haridwar", "Nainital"],
+    "West Bengal": ["Kolkata", "Siliguri", "Asansol", "Durgapur"],
+    "Andaman and Nicobar Islands": ["Port Blair"],
+    "Chandigarh": ["Chandigarh"],
+    "Dadra and Nagar Haveli and Daman and Diu": ["Daman", "Silvassa"],
+    "Delhi": ["New Delhi", "Delhi"],
+    "Jammu and Kashmir": ["Srinagar", "Jammu"],
+    "Ladakh": ["Leh", "Kargil"],
+    "Lakshadweep": ["Kavaratti"],
+    "Puducherry": ["Puducherry", "Karaikal", "Mahe"]
 }
 
-# --- Weather-Based Advice ---
-def get_weather_advice(temperature, humidity, description, wind_speed):
+# --- Advisory Function ---
+def get_weather_advice(temperature, humidity, weather_description, wind_speed):
     advice = []
-    if temperature > 35:
-        advice.append("☀️ High temperature: Prefer evening/morning irrigation.")
-    if humidity < 30:
-        advice.append("💧 Low humidity: Increase irrigation frequency.")
-    if "clear" in description:
-        advice.append("🌞 Clear sky: Great for pesticide spraying or harvesting.")
+
+    # Temperature
+    if temperature > 38:
+        advice.append("⚠️ High temperature! Irrigate in early morning or late evening.")
+    elif temperature < 15:
+        advice.append("🌡️ Low temperature. Delay sowing heat-loving crops.")
+
+    # Humidity
+    if humidity < 20:
+        advice.append("💧 Very low humidity. Increase irrigation frequency.")
+    elif humidity > 80:
+        advice.append("🌫️ High humidity. Monitor for fungal diseases.")
+
+    # Weather description
+    if "rain" in weather_description.lower():
+        advice.append("🌧️ Rain expected. Avoid irrigation.")
+    elif "clear" in weather_description.lower():
+        advice.append("☀️ Clear sky. Ideal for spraying or harvesting.")
+
+    # Wind speed
     if wind_speed > 10:
-        advice.append("💨 High wind: Avoid spraying pesticides/fertilizers.")
+        advice.append("💨 Windy! Avoid pesticide/fertilizer spraying.")
+    elif wind_speed < 2:
+        advice.append("🌬️ Low wind speed. Safe for spraying.")
+
     return advice
 
-# --- Load GPT2 Model (Stable) ---
-@st.cache_resource
-def load_model():
-    tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
-    model = GPT2LMHeadModel.from_pretrained("gpt2")
-    return pipeline("text-generation", model=model, tokenizer=tokenizer)
-
-text_gen_pipe = load_model()
-
-# --- Streamlit UI ---
-st.title("🌾 Farmify: Weather & AI Crop Advisory")
+# --- UI ---
+st.title("🌦️ Farmify Weather & Advisory")
 
 selected_state = st.selectbox("Select State", list(state_city_map.keys()))
 selected_city = st.selectbox("Select City", state_city_map[selected_state])
+show_advice = st.checkbox("Show Agricultural Advisory")
 
-if st.button("Get Weather & Advisory"):
+if st.button("Get Weather"):
     params = {
         "q": selected_city,
         "appid": weather_api_key,
         "units": "metric"
     }
-    res = requests.get(base_url, params=params)
 
-    if res.status_code == 200:
-        data = res.json()
-        temp = data["main"]["temp"]
-        desc = data["weather"][0]["description"]
-        hum = data["main"]["humidity"]
-        wind = data["wind"]["speed"]
+    response = requests.get(base_url, params=params)
 
-        st.subheader(f"✅ Weather in {selected_city}, {selected_state}")
-        st.markdown(f"🌡️ Temperature: **{temp}°C**")
-        st.markdown(f"🌥️ Description: **{desc.title()}**")
-        st.markdown(f"💧 Humidity: **{hum}%**")
-        st.markdown(f"💨 Wind Speed: **{wind} m/s**")
+    if response.status_code == 200:
+        data = response.json()
+        temperature = data['main']['temp']
+        weather_desc = data['weather'][0]['description']
+        humidity = data['main']['humidity']
+        wind_speed = data['wind']['speed']
 
-        st.subheader("📋 Manual Advice")
-        advice = get_weather_advice(temp, hum, desc, wind)
-        for point in advice:
-            st.markdown(f"- {point}")
+        st.success(f"Weather in {selected_city}, {selected_state}")
+        st.write(f"🌡️ Temperature: **{temperature}°C**")
+        st.write(f"🌥️ Description: **{weather_desc.title()}**")
+        st.write(f"💧 Humidity: **{humidity}%**")
+        st.write(f"💨 Wind Speed: **{wind_speed} m/s**")
 
-        st.subheader("🤖 AI Recommendation")
-        prompt = (
-            f"Suggest crops and farming advice for a region with temperature {temp}°C, "
-            f"{desc}, humidity {hum}%, wind speed {wind} m/s in {selected_city}, {selected_state}.\n"
-            f"Give advice in bullet points:\n"
-        )
-
-        result = text_gen_pipe(prompt, max_length=150, num_return_sequences=1)[0]['generated_text']
-        for line in result.split("\n"):
-            if line.strip():
-                st.markdown(f"- {line.strip()}")
-
+        if show_advice:
+            st.subheader("📋 Agricultural Advisory")
+            advice_list = get_weather_advice(temperature, humidity, weather_desc, wind_speed)
+            for tip in advice_list:
+                st.markdown(f"- {tip}")
     else:
-        st.error("Failed to fetch weather data.")
+        st.error("❌ Failed to fetch weather. Please try again later.")
