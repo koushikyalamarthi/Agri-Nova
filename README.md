@@ -70,3 +70,4 @@ git clone https://github.com/abhishek786216/agrinova.git
 cd agrinova
 pip install -r requirements.txt
 streamlit run app.py
+
