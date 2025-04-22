@@ -2,7 +2,7 @@
 
 **AgriNova** is a smart farming web application designed to assist farmers and agri-enthusiasts by integrating Deep Learning and data-driven solutions. It provides intelligent support for identifying plant diseases, choosing the right crops and fertilizers, and offering real-time action advice based on weather conditions.
 
-🔗 **Live Demo:** [AgriNova Web App](https://agrinova.streamlit.app/)
+🔗 **Live Demo: https://agrinova.streamlit.app/
 
 ---
 
@@ -66,7 +66,7 @@
 ## 📦 Installation & Run Locally
 
 ```bash
-git clone https://github.com/your-username/agrinova.git
+git clone https://github.com/abhishek786216/agrinova.git
 cd agrinova
 pip install -r requirements.txt
 streamlit run app.py
