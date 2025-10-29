@@ -64,7 +64,7 @@ elif selected == "About":
 
         ### 👨‍💻 Team Members:
         - **Abhishek** – 231212001  
-        - **Gautam** – 231212013  
+        - **Koushik Yalamarthi** – 231212023  
         - **Angad** – 231212003  
         - **Ruchir** – 231212011
 
