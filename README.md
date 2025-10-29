@@ -2,10 +2,6 @@
 
 **AgriNova** is a smart farming web application designed to assist farmers and agri-enthusiasts by integrating Deep Learning and data-driven solutions. It provides intelligent support for identifying plant diseases, choosing the right crops and fertilizers, and offering real-time action advice based on weather conditions.
 
-🔗 **Live Demo: https://agrinova.streamlit.app/
-
----
-
 ## 🚀 Features
 
 - **🌱 Plant Disease Detection**  
@@ -25,12 +21,14 @@
 ## 🧠 Model Overview
 
 ### 🔍 1. **Plant Disease Detection**
+
 - **Model**: Convolutional Neural Network (CNN)
 - **Framework**: TensorFlow & Keras
 - **Input**: Image of a leaf
 - **Output**: Predicted disease (or healthy)
 
 ### 🌾 2. **Crop Recommendation**
+
 - **Model**: Classification Model (Random Forest or similar)
 - **Input Features**:
   - Nitrogen (N), Phosphorus (P), Potassium (K)
@@ -39,12 +37,14 @@
 - **Output**: Recommended crop (e.g., Rice, Wheat, Cotton)
 
 ### 💊 3. **Fertilizer Suggestion**
+
 - **Approach**: Rule-based logic
 - **Logic**:
   - Compares current NPK values with ideal values for the selected crop
   - Suggests fertilizers to balance soil nutrients
 
 ### 📈 4. **Action Advisory**
+
 - **Approach**: No ML used
 - **Data Source**: Real-time weather from OpenWeatherMap API
 - **Working**:
@@ -71,3 +71,4 @@ cd agrinova
 pip install -r requirements.txt
 streamlit run app.py
 
+```

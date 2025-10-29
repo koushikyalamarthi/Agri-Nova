@@ -63,10 +63,9 @@ elif selected == "About":
         **AgriNova** is a smart farming web platform developed by a passionate team from **NIT Delhi** 🚀.
 
         ### 👨‍💻 Team Members:
+        - **Koushik Yalamarthi** – 231212023
         - **Abhishek** – 231212001  
-        - **Koushik Yalamarthi** – 231212023  
-        - **Angad** – 231212003  
-        - **Ruchir** – 231212011
+         
 
         ### 🌟 Our Mission:
         To empower farmers through a fusion of:
